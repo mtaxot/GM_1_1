@@ -58,3 +58,10 @@ double** mat_multiply(double **A, double **B, int arows, int acols, int brows, i
  ** the output is x1, so we need to calc the origin data after this.
  **/
 double predict_x1(double a, double u, double x0_1, int k);
+
+double check_precision(double *origin, double *pred, int n);
+
+
+void cat_vec(double *vec, int len);
+
+void cat_mat(double **mat, int rows, int cols);

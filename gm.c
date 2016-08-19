@@ -234,3 +234,54 @@ double predict_x1(double a, double u, double x0_0, int k){
 	double res = (x0_0 - u / a) * exp(-a * k) + u / a;
 	return res;
 }
+double check_precision(double *origin, double *pred, int n){
+	double *delta = (double*)malloc(n * sizeof(double));
+	int i;
+	for(i = 0; i < n; i++){
+		delta[i] = fabs(origin[i] - pred[i]);
+	}
+	double max = -999999999;
+	double min = 999999999;
+	for(i = 0; i < n; i++){
+		if(delta[i] > max){
+			max = delta[i];
+		}
+		if(delta[i] < min){
+			min = delta[i];
+		}
+	}
+	double *y = (double*)malloc(n * sizeof(double));
+	for(i = 0; i < n; i++){
+		y[i] = (min + 0.5 * max) / (delta[i] + 0.5 * max);
+	}
+	
+	double sum = 0;
+	for(i = 0; i < n; i++){
+		sum += y[i];
+	}
+	
+	free(delta);
+	free(y);
+	return sum / n;//sum / n >=0.6 better.
+}
+
+
+
+void cat_vec(double *vec, int len){
+	int i;
+	for(i = 0; i < len; i++){
+		printf("%f ",vec[i]);
+	}
+	printf("\n");
+}
+
+void cat_mat(double **mat, int rows, int cols){
+	int i,j;
+	for(i = 0; i < rows; i++){
+		for(i = 0; i < cols; i++){
+			printf("%f ",mat[i][j]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+}
